@@ -1,10 +1,18 @@
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight request
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  
+
   const { city, state, interests } = req.body;
-  console.log("Request body:", req.body);
 
   const prompt = `User is in ${city}, ${state}, interested in "${interests}". Suggest local academic or research opportunities.`;
 
@@ -20,8 +28,8 @@ export default async function handler(req, res) {
         messages: [{ role: "user", content: prompt }],
       }),
     });
+
     const data = await openaiRes.json();
-    console.log("OpenAI status:", openaiRes.status, data);
 
     if (!openaiRes.ok) {
       return res.status(openaiRes.status).json({ error: data });
