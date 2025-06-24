@@ -3,7 +3,6 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Handle preflight request
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -17,7 +16,7 @@ export default async function handler(req, res) {
   const prompt = `User is in ${city}, ${state}, interested in "${interests}". Suggest local academic or research opportunities.`;
 
   try {
-    const openaiRes = await fetch("https://admitlink-minetor.vercel.app/api/research", {
+    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -30,6 +29,7 @@ export default async function handler(req, res) {
     });
 
     const data = await openaiRes.json();
+    console.log("OpenAI status:", openaiRes.status, data);
 
     if (!openaiRes.ok) {
       return res.status(openaiRes.status).json({ error: data });
@@ -37,8 +37,9 @@ export default async function handler(req, res) {
 
     const reply = data.choices?.[0]?.message?.content || "No response";
     res.status(200).json({ reply });
+
   } catch (err) {
-    console.error("Error:", err);
+    console.error("OpenAI API call failed:", err);
     res.status(500).json({ error: "Server error calling OpenAI." });
   }
 }
