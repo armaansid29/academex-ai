@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   const prompt = `User is in ${city}, ${state}, interested in "${interests}". Suggest local academic or research opportunities.`;
 
   try {
-    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+    const openaiRes = await fetch("https://admitlink-minetor.vercel.app/api/research", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
