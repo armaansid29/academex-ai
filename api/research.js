@@ -3,43 +3,39 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { city, state, interests } = req.body;
 
-  const prompt = `User is in ${city}, ${state}, interested in "${interests}". Suggest local academic or research opportunities.`;
+  const prompt = `I am a high school student based in ${city}, ${state}, and I'm interested in ${interests}. What are some academic or research opportunities (local or online) that I can explore?`;
 
   try {
-    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
+    const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
+        model: "command-r-plus", // or use "command" for slightly faster model
+        prompt,
+        max_tokens: 300,
+        temperature: 0.7,
       }),
     });
 
-    const data = await openaiRes.json();
-    console.log("OpenAI status:", openaiRes.status, data);
+    const data = await cohereRes.json();
+    console.log("Cohere status:", cohereRes.status, data);
 
-    if (!openaiRes.ok) {
-      return res.status(openaiRes.status).json({ error: data });
+    if (!cohereRes.ok) {
+      return res.status(cohereRes.status).json({ error: data });
     }
 
-    const reply = data.choices?.[0]?.message?.content || "No response";
-    res.status(200).json({ reply });
-
+    const reply = data.generations?.[0]?.text?.trim() || "No response from Cohere.";
+    return res.status(200).json({ reply });
   } catch (err) {
-    console.error("OpenAI API call failed:", err);
-    res.status(500).json({ error: "Server error calling OpenAI." });
+    console.error("Cohere API error:", err);
+    return res.status(500).json({ error: "Server error calling Cohere API." });
   }
 }
