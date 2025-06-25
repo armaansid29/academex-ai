@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { city, state, interests } = req.body;
+  const { city, state, interests, bio } = req.body;
 
   const prompt = `I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}. Can you find me the names of 3 professors at some 
   local universities and their current research interests? When you output this, please give me the name of the professor, followed by the name of the university they 
