@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   const { city, state, interests } = req.body;
 
-  const prompt = `I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}. Can you find me the names of some professors at some local universities and their current research interests? When you output this, please give me the name of the professor, followed by the name of the university they are based out of, followed by a few of the key research interest words they are associated with? Please also provide their personal website link (or the link to their page on the university faculty database if they don't have a personal website). Put a line of space between each result you give me.`;
+  const prompt = `I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}. Can you find me the names of 5 professors at some local universities and their current research interests? When you output this, please give me the name of the professor, followed by the name of the university they are based out of, followed by a few of the key research interest words they are associated with? Please also provide their personal website link (or the link to their page on the university faculty database if they don't have a personal website). Put a line of space between each result you give me.`;
 
   try {
     const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
