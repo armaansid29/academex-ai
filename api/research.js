@@ -17,8 +17,8 @@ export default async function handler(req, res) {
   Start the section with the cold email template with "Cold Email:". The email should start with a good greeting, followed by a little intro about me in the first paragraph 
   based on the information I provided you in my bio. Then, the second paragraph should delve closely into their works and the research you did into these, expressing 
   deep thought about the work and geniune interest in it. Finally, the third paragraph should finish by kindly asking for potential opportunities to be mentored or to 
-  help out with their tasks. Finish by saying that a resume is attached for reference and saying you are looking forward to their response.
-  Please make the final line of the cold email read "Sincerely, [Your Name]"`;
+  help out with their tasks. Finish the third paragraph saying that a resume is attached for reference and saying you are looking forward to their response.
+  Make sure that the final line of the cold email reads "Sincerely, [Your Name]"`;
 
   try {
     const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
