@@ -14,7 +14,11 @@ export default async function handler(req, res) {
   Please also provide a short description of them and their work in 3 sentences max, starting this output with "Bio:". Also, please help me write a thoughtful email for 
   each one of these professors. Look at one of their recent papers, analyze it, and come up with a thoughtful email that a high school student may craft that 
   would be compelling to persuade them to take me under their wing this summer. Use this little bit of information about me to personalize the email too: ${bio}. 
-  Start the section with the cold email template with "Cold Email:". Please make the final line of the cold email read "Sincerely, [Your Name]"`;
+  Start the section with the cold email template with "Cold Email:". The email should start with a good greeting, followed by a little intro about me in the first paragraph 
+  based on the information I provided you in my bio. Then, the second paragraph should delve closely into their works and the research you did into these, expressing 
+  deep thought about the work and geniune interest in it. Finally, the third paragraph should finish by kindly asking for potential opportunities to be mentored or to 
+  help out with their tasks. Finish by saying that a resume is attached for reference and saying you are looking forward to their response.
+  Please make the final line of the cold email read "Sincerely, [Your Name]"`;
 
   try {
     const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
