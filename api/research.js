@@ -13,8 +13,8 @@ export default async function handler(req, res) {
   are based out of, followed by a few of the key research interest words they are associated with? List these as "Professor:", "University:", and "Research Keywords:". 
   Please also provide a short description of them and their work in 3 sentences max, starting this output with "Bio:". Also, please help me write a thoughtful email for 
   each one of these professors. Look at one of their recent papers, analyze it, and come up with a thoughtful email that a high school student may craft that 
-  would be compelling to persuade them to take me under their wing this summer. Start the section with 
-  the cold email template with "Cold Email:". Please make the final line of the cold email read "Sincerely, [Your Name]"`;
+  would be compelling to persuade them to take me under their wing this summer. Use this little bit of information about me to personalize the email too: ${bio}. 
+  Start the section with the cold email template with "Cold Email:". Please make the final line of the cold email read "Sincerely, [Your Name]"`;
 
   try {
     const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
