@@ -20,9 +20,11 @@ Bio: [2-3 sentences about their research and background]
 Cold Email: [A complete, thoughtful cold email as described below]
 
 The cold email should:
-- Start with a greeting.
-- Introduce me using this info: ${bio}
-- In the second paragraph, discuss their research and show genuine interest.
+- Start with a proper greeting.
+- Introduce me using this info: ${bio}, as well as my research interests that I listed.
+- In the second paragraph, scrape online to find their research and discuss it by selecting a specific project (preferably recent) and talking about specifics of it
+and how it is geniunely interesting. Make sure to include specific detail to show thoughtfulness and genuine interest, but also only address it with the level of 
+complexity that a high school student would be able to.
 - In the third paragraph, kindly ask for mentorship or research opportunities, mention a resume is attached, and end with "Sincerely, [Your Name]".
 
 Please repeat this format for 3 different professors. Make sure each cold email is complete and ends with "Sincerely, [Your Name]".
@@ -47,6 +49,25 @@ Dear Dr. Doe,
 Sincerely, [Your Name]
 
 [Repeat for a third professor]
+
+Here is a sample cold email that another AI wrote for me, and I admire the level of complexity with which it addresses the professor's work: 
+Dear Professor Lee,
+
+My name is [Your Name], and I am a high school senior from the Chicago area who will be joining Carnegie Mellon's School of Computer Science this fall. I am passionate about quantitative finance and particularly interested in the intersection of mathematical modeling and real-world financial markets.
+
+I recently read about your work on the behavior of implied volatility surfaces, as well as the innovative applied research being conducted through the Financial Mathematics Project Lab. I was fascinated by the way you bridge rigorous mathematical theory with the practical realities faced by traders and risk managers — particularly your insights on how market conditions shape the volatility smile. It made me realize how powerful a deep mathematical understanding can be in building robust models for pricing and trading.
+
+This summer, I would be honored to contribute to any research or projects you are leading, even if only in a small capacity. I have a strong background in mathematics (including multivariable calculus and probability), am proficient in Python, and have independently explored topics such as stochastic processes and basic options theory. I am eager to learn, highly self-motivated, and very interested in applying technical skills to real-world financial challenges.
+
+If there is any opportunity to assist you or your team this summer — whether through a formal project or informal mentorship — I would love to discuss how I might best contribute.
+
+Thank you very much for your time and consideration.
+
+Sincerely,
+[Your Name]
+[Your Contact Information]
+
+Use this email template as an example, specifically the way it formats everything and output your emails with similar formatting and depth.
 `;
 
   try {
