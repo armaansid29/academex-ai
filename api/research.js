@@ -8,17 +8,46 @@ export default async function handler(req, res) {
 
   const { city, state, interests, bio } = req.body;
 
-  const prompt = `I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}. Can you find me the names of 3 professors at some 
-  local universities and their current research interests? When you output this, please give me the name of the professor, followed by the name of the university they 
-  are based out of, followed by a few of the key research interest words they are associated with? List these as "Professor:", "University:", and "Research Keywords:". 
-  Please also provide a short description of them and their work in 3 sentences max, starting this output with "Bio:". Also, please help me write a thoughtful email for 
-  each one of these professors. Look at one of their recent papers, analyze it, and come up with a thoughtful email that a high school student may craft that 
-  would be compelling to persuade them to take me under their wing this summer. Use this little bit of information about me to personalize the email too: ${bio}. 
-  Start the section with the cold email template with "Cold Email:". The email should start with a good greeting, followed by a little intro about me in the first paragraph 
-  based on the information I provided you in my bio. Then, the second paragraph should delve closely into their works and the research you did into these, expressing 
-  deep thought about the work and geniune interest in it. Finally, the third paragraph should finish by kindly asking for potential opportunities to be mentored or to 
-  help out with their tasks. Finish the third paragraph saying that a resume is attached for reference and saying you are looking forward to their response.
-  Make sure that the final line of the cold email reads "Sincerely, [Your Name]"`;
+  const prompt = `
+I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}.
+Can you find me the names of 3 professors at some local universities and their current research interests?
+For each professor, output the following fields in this exact format, one after another, for all 3 professors:
+
+Professor: [Full Name]
+University: [University Name]
+Research Keywords: [comma-separated keywords]
+Bio: [2-3 sentences about their research and background]
+Cold Email: [A complete, thoughtful cold email as described below]
+
+The cold email should:
+- Start with a greeting.
+- Introduce me using this info: ${bio}
+- In the second paragraph, discuss their research and show genuine interest.
+- In the third paragraph, kindly ask for mentorship or research opportunities, mention a resume is attached, and end with "Sincerely, [Your Name]".
+
+Please repeat this format for 3 different professors. Make sure each cold email is complete and ends with "Sincerely, [Your Name]".
+
+Example format:
+Professor: Dr. Jane Smith
+University: University of Example
+Research Keywords: neuroscience, brain imaging, cognition
+Bio: Dr. Smith is a leading researcher in cognitive neuroscience, focusing on brain imaging techniques to study memory. She has published extensively on the neural basis of learning. Her recent work explores the intersection of AI and neuroscience.
+Cold Email:
+Dear Dr. Smith,
+[...full email...]
+Sincerely, [Your Name]
+
+Professor: Dr. John Doe
+University: Example State University
+Research Keywords: artificial intelligence, robotics, machine learning
+Bio: Dr. Doe's research centers on robotics and machine learning, with a focus on real-world applications. He has led several interdisciplinary projects. His recent papers explore the ethical implications of AI in society.
+Cold Email:
+Dear Dr. Doe,
+[...full email...]
+Sincerely, [Your Name]
+
+[Repeat for a third professor]
+`;
 
   try {
     const cohereRes = await fetch("https://api.cohere.ai/v1/generate", {
@@ -28,9 +57,9 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "command-r-plus", // or use "command" for slightly faster model
+        model: "command-r-plus",
         prompt,
-        max_tokens: 300,
+        max_tokens: 1500, // Increased to allow for 3 full professors and emails
         temperature: 0.7,
       }),
     });
