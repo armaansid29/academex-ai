@@ -9,7 +9,9 @@ export default async function handler(req, res) {
   const { city, state, interests, bio } = req.body;
 
   const prompt = `
-I am a high school student based in ${city}, ${state}, and my academic interests lie in ${interests}.
+I am a high school student (unless otherwise mentioned in my ${bio}, in which case, use that information instead. For example, if I said university student, then use that, 
+or if I said M2 student, then use that.)
+based in ${city}, ${state}, and my academic interests lie in ${interests}.
 Can you find me the names of 3 professors at some local universities and their current research interests?
 For each professor, output the following fields in this exact format, one after another, for all 3 professors:
 
